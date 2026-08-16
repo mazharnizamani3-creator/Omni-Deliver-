@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Shopping bag body -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M34,44h40l-3,36a4,4 0 0,1 -4,4H41a4,4 0 0,1 -4,-4L34,44z" />
+    <!-- Shopping bag handle -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M44,44v-6a10,10 0 0,1 20,0v6h-5v-6a5,5 0 0,0 -10,0v6z" />
+    <!-- Fresh Leaf Accent in bag -->
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M54,50c-6,4 -8,12 -3,17c6,5 15,2 17,-5c0,-8 -9,-14 -14,-12z" />
+    <path
+        android:fillColor="#34D399"
+        android:pathData="M53,53c0,0 6,4 7,9"
+        android:strokeColor="#059669"
+        android:strokeWidth="1.5" />
+    <!-- Lightning fast flash in yellow-orange -->
+    <path
+        android:fillColor="#FBBF24"
+        android:pathData="M46,62l6,-12h-6l2,-6h-5l-4,10h5z" />
+</vector>

@@ -1,0 +1,6 @@
+{
+  "name": "Omni Deliver",
+  "description": "Modern and fast grocery delivery app featuring fresh produce, pantry essentials, interactive cart, express checkout, and real-time order tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
