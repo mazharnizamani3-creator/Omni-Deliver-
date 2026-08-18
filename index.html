@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omni Deliver - Multi-Category Delivery</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #f8f9fa; color: #333; padding-bottom: 70px; }
+        header { background: #ff4757; color: white; padding: 15px; text-align: center; font-size: 20px; font-weight: bold; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .container { padding: 15px; max-width: 600px; margin: auto; }
+        .categories { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; }
+        .category-btn { background: white; border: 1px solid #ddd; padding: 8px 15px; border-radius: 20px; white-space: nowrap; cursor: pointer; font-weight: 600; color: #555; }
+        .category-btn.active { background: #ff4757; color: white; border-color: #ff4757; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .card { background: white; border-radius: 12px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center; }
+        .card img { width: 100%; height: 100px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
+        .card h3 { font-size: 16px; margin-bottom: 5px; }
+        .card p { color: #ff4757; font-weight: bold; margin-bottom: 10px; font-size: 14px; }
+        .card button { background: #2ed573; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; }
+        .nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #ddd; box-shadow: 0 -2px 5px rgba(0,0,0,0.05); }
+        .nav button { background: none; border: none; font-weight: 600; color: #666; cursor: pointer; }
+        .nav button.active { color: #ff4757; }
+        .section { display: none; }
+        .section.active { display: block; }
+        .admin-box { background: white; padding: 15px; border-radius: 10px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body>
+
+    <header>🛒 Omni Deliver</header>
+
+    <div class="container">
+        <!-- Home Section -->
+        <div id="home-section" class="section active">
+            <div class="categories">
+                <button class="category-btn active" onclick="filterCat('all')">All</button>
+                <button class="category-btn" onclick="filterCat('biryani')">Biryani</button>
+                <button class="category-btn" onclick="filterCat('desi')">Desi Food</button>
+                <button class="category-btn" onclick="filterCat('pharmacy')">Pharmacy</button>
+                <button class="category-btn" onclick="filterCat('grocery')">Grocery</button>
+            </div>
+            <div class="grid" id="product-grid">
+                <!-- Products dynamically inserted -->
+            </div>
+        </div>
+
+        <!-- Orders Section -->
+        <div id="orders-section" class="section">
+            <h2>Live Order Tracking</h2>
+            <div id="orders-list" style="margin-top: 15px;">
+                <p>No active orders right now.</p>
+            </div>
+        </div>
+
+        <!-- Admin Section -->
+        <div id="admin-section" class="section">
+            <h2>Admin Dashboard</h2>
+            <div style="margin-top: 15px;" id="admin-orders">
+                <div class="admin-box">
+                    <strong>Order #101</strong> - Chicken Biryani (x2)<br>
+                    <span style="color: green;">Status: Out for Delivery</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="nav">
+        <button onclick="switchTab('home')" class="active" id="nav-home">Home</button>
+        <button onclick="switchTab('orders')" id="nav-orders">Orders</button>
+        <button onclick="switchTab('admin')" id="nav-admin">Admin</button>
+    </div>
+
+    <script>
+        const products = [
+            { id: 1, name: 'Special Chicken Biryani', price: 'Rs. 350', cat: 'biryani', img: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=300' },
+            { id: 2, name: 'Mutton Karhai', price: 'Rs. 950', cat: 'desi', img: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=300' },
+            { id: 3, name: 'Panadol Extra', price: 'Rs. 50', cat: 'pharmacy', img: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300' },
+            { id: 4, name: 'Fresh Milk (1L)', price: 'Rs. 220', cat: 'grocery', img: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=300' }
+        ];
+
+        function renderProducts(filter = 'all') {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+            const filtered = filter === 'all' ? products : products.filter(p => p.cat === filter);
+            filtered.forEach(p => {
+                grid.innerHTML += `
+                    <div class="card">
+                        <img src="${p.img}" alt="${p.name}">
+                        <h3>${p.name}</h3>
+                        <p>${p.price}</p>
+                        <button onclick="alert('Order placed for ${p.name}!')">Order Now</button>
+                    </div>
+                `;
+            });
+        }
+
+        function filterCat(cat) {
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProducts(cat);
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tab + '-section').classList.add('active');
+            document.getElementById('nav-' + tab).classList.add('active');
+        }
+
+        renderProducts();
+    </script>
+</body>
+</html>
+
